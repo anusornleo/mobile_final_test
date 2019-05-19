@@ -83,6 +83,10 @@ class LoginFormState extends State<LoginForm> {
                                   builder: (context) => MainHome()));
                         }
                       }
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text('user or password ไม่ถูกต้อง'),
+                        duration: Duration(seconds: 3),
+                      ));
                     }
                   }),
             ),
