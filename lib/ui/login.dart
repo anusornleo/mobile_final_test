@@ -80,7 +80,7 @@ class LoginFormState extends State<LoginForm> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainHome()));
+                                  builder: (context) => MainHome(i)));
                         }
                       }
                       Scaffold.of(context).showSnackBar(SnackBar(

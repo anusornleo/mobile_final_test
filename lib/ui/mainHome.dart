@@ -1,59 +1,38 @@
+import 'package:final_project_test/model/modelUser.dart';
+import 'package:final_project_test/ui/Home.dart';
+import 'package:final_project_test/ui/album.dart';
+import 'package:final_project_test/ui/json_data_ui.dart';
+import 'package:final_project_test/ui/profile.dart';
 import 'package:flutter/material.dart';
 
 class MainHome extends StatelessWidget {
+  Todo alldata;
+  MainHome(this.alldata);
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "Home",
-          ),
-        ),
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   title: Text(
+        //     "Home",
+        //   ),
+        // ),
         body: TabBarView(
           children: <Widget>[
-            Container(
-              child: new Center(
-                child: new Text(
-                  "Home",
-                  style: TextStyle(fontSize: 30.0, color: Colors.grey),
-                ),
-              ),
-            ),
-            Container(
-              child: new Center(
-                child: new Text(
-                  "Notify",
-                  style: TextStyle(fontSize: 30.0, color: Colors.grey),
-                ),
-              ),
-            ),
-            Container(
-              child: new Center(
-                child: new Text(
-                  "Map",
-                  style: TextStyle(fontSize: 30.0, color: Colors.grey),
-                ),
-              ),
-            ),
-            Container(
-              child: new Center(
-                child: new Text(
-                  "Profile",
-                  style: TextStyle(fontSize: 30.0, color: Colors.grey),
-                ),
-              ),
-            ),
-            Container(
-              child: new Center(
-                child: new Text(
-                  "Setup",
-                  style: TextStyle(fontSize: 30.0, color: Colors.grey),
-                ),
-              ),
-            ),
+            // Container(
+            //   child: new Center(
+            //     child: new Text(
+            //       "Home",
+            //       style: TextStyle(fontSize: 30.0, color: Colors.grey),
+            //     ),
+            //   ),
+            // ),
+            Home(alldata),
+            Friend(),
+            Profile(alldata),
+            Album(),
           ],
         ),
         bottomNavigationBar: new Material(

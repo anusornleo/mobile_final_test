@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
+class Friend extends StatefulWidget {
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  FriendState createState() => new FriendState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class FriendState extends State<Friend> {
   String url = 'https://randomuser.me/api/?results=15';
   List data;
   Future<String> makeRequest() async {
