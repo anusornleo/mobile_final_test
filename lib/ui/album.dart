@@ -14,8 +14,7 @@ class AlbumState extends State {
   String url = 'https://jsonplaceholder.typicode.com/albums/1/photos';
   List data;
   Future<String> makeRequest() async {
-    var response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    var response = await http.get(Uri.encodeFull(url));
     setState(() {
       var extractdata = json.decode(response.body);
       data = extractdata["photos"];
