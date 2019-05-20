@@ -110,7 +110,10 @@ class SignInFormState extends State<SignInForm> {
                               .saveNewTask(
                                   Todo.getValue(_email.text, _password.text))
                               .then((_) {
-                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginForm()));
                           });
                         }
                       }),

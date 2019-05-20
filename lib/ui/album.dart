@@ -12,12 +12,11 @@ class Album extends StatefulWidget {
 
 class AlbumState extends State {
   String url = 'https://jsonplaceholder.typicode.com/albums/1/photos';
-  List data;
+  var data;
   Future<String> makeRequest() async {
     var response = await http.get(Uri.encodeFull(url));
     setState(() {
-      var extractdata = json.decode(response.body);
-      data = extractdata["photos"];
+      data = json.decode(response.body).cast<Map<String, dynamic>>();
     });
   }
 
@@ -28,27 +27,26 @@ class AlbumState extends State {
 
   @override
   Widget build(BuildContext context) {
-    print(data);
     return Scaffold(
       appBar: AppBar(title: Text("Album")),
-      // body: ListView.builder(
-      //   itemCount: data == null ? 0 : data.length,
-      //   itemBuilder: (BuildContext context, i) {
-      //     return new Card(
-      //         child: Column(
-      //       children: <Widget>[
-      //         SizedBox(
-      //           height: 180,
-      //           child: Stack(
-      //             children: <Widget>[
-      //               Positioned.fill(child: Image.network(data[i]["thumbnail"]))
-      //             ],
-      //           ),
-      //         )
-      //       ],
-      //     ));
-      //   },
-      // ),
+      body: ListView.builder(
+        itemCount: data == null ? 0 : data.length,
+        itemBuilder: (BuildContext context, i) {
+          return new Card(
+              child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 180,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned.fill(child: Image.network(data[i]["url"]))
+                  ],
+                ),
+              )
+            ],
+          ));
+        },
+      ),
     );
   }
 }

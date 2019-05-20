@@ -17,6 +17,8 @@ class FriendState extends State<Friend> {
 
     setState(() {
       var extractdata = json.decode(response.body);
+      // print("object##################");
+      // print(extractdata.runtimeType);
       data = extractdata["results"];
     });
   }
