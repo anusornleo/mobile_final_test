@@ -41,19 +41,16 @@ class LoginFormState extends State<LoginForm> {
     print(stateLogin);
     if (stateLogin != 0) {
       print("Alrady login");
-      print(items);
-      for (var i in items) {
-        print("5555");
-        if (stateLogin == i.id) {
-          // final prefs = await SharedPreferences.getInstance();
-          // prefs.setInt("user", i.id);
-          // prefs.remove('user');
-          // print(prefs.getInt('user') ?? 0);
-          print("GoHome");
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MainHome(i)));
-        }
-      }
+      var under18s =
+          items.singleWhere((i) => i.id == stateLogin, orElse: () => null);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MainHome(under18s)));
+      // for (var i in items) {
+      //   if (stateLogin == i.id) {
+      //     Navigator.pushReplacement(
+      //         context, MaterialPageRoute(builder: (context) => MainHome(i)));
+      //   }
+      // }
     }
   }
 
