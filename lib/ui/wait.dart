@@ -21,13 +21,9 @@ class WaitState extends State {
   Future initState() {
     super.initState();
     db.getAllTask().then((todos) {
-      // restart read data when it changed
       setState(() {
-        print(todos.length);
         todos.forEach((note) {
           items.add(Todo.fromMap(note));
-          print(items.length);
-          // print(items[0].toMap());
         });
         getLogin();
       });
@@ -52,7 +48,6 @@ class WaitState extends State {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
