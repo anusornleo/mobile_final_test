@@ -1,5 +1,7 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:final_project_test/ui/login.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../model/modelUser.dart';
 
 class SignInForm extends StatefulWidget {
@@ -18,12 +20,25 @@ class SignInFormState extends State<SignInForm> {
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
   final TextEditingController _cpassword = new TextEditingController();
+  final TextEditingController _dob = new TextEditingController();
   final _formKey2 = GlobalKey<ScaffoldState>();
 
   List<Todo> listTodo;
 
+  String _gen = "";
+  List<String> years = ['1', '2', '3', '4'];
+  String _year = '1';
+
+  void _handleRadioValueChange1(String value) {
+    setState(() {
+      _gen = value;
+      print(_gen);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isChecked = false;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -82,6 +97,72 @@ class SignInFormState extends State<SignInForm> {
                   keyboardType: TextInputType.text,
                   obscureText: true,
                 ),
+                Row(
+                  children: <Widget>[
+                    Text("Check"),
+                    Checkbox(
+                      value: isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isChecked = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                InputDecorator(
+                  decoration: const InputDecoration(
+                      icon: const Icon(Icons.people), labelText: 'Year'),
+                  // isEmpty: year == '',
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: _year,
+                      isDense: true,
+                      onChanged: (String value) {
+                        setState(() {
+                          _year = value;
+                        });
+                      },
+                      items: years.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Radio(
+                      value: "male",
+                      groupValue: _gen,
+                      onChanged: _handleRadioValueChange1,
+                    ),
+                    new Text(
+                      'Male',
+                      style: new TextStyle(fontSize: 16.0),
+                    ),
+                    new Radio(
+                      value: "female",
+                      groupValue: _gen,
+                      onChanged: _handleRadioValueChange1,
+                    ),
+                    new Text(
+                      'Female',
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+                DateTimePickerFormField(
+                  controller: _dob,
+                  inputType: InputType.date,
+                  format: DateFormat("EEEE dd MMMM yyyy"),
+                  decoration: InputDecoration(labelText: 'Date'),
+                ),
                 Builder(
                   builder: (context) => RaisedButton(
                       color: Theme.of(context).accentColor,
@@ -99,8 +180,13 @@ class SignInFormState extends State<SignInForm> {
                           ));
                         } else {
                           db
-                              .saveNewTask(
-                                  Todo.getValue(_email.text, _password.text))
+                              .saveNewTask(Todo.getValue(
+                                  _email.text,
+                                  _password.text,
+                                  isChecked.toString(),
+                                  _year,
+                                  _gen,
+                                  _dob.toString()))
                               .then((_) {
                             items.clear();
                             db.getAllTask().then((todos) {

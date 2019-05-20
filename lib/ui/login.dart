@@ -20,37 +20,7 @@ class LoginFormState extends State<LoginForm> {
   final TextEditingController _password = new TextEditingController();
   final _formKey = GlobalKey<ScaffoldState>();
   final prefs = SharedPreferences.getInstance();
-
   TodoDatabase db = TodoDatabase();
-  // @override
-  // Future initState() {
-  //   super.initState();
-  //   items.length == 0 ? print("load") : print("complte");
-  //   db.getAllTask().then((todos) {
-  //     // restart read data when it changed
-  //     setState(() {
-  //       print(todos.length);
-  //       todos.forEach((note) {
-  //         items.add(Todo.fromMap(note));
-  //         print(items.length);
-  //       });
-  //       // getLogin();
-  //     });
-  //   });
-  // }
-
-  // Future<String> getLogin() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final stateLogin = prefs.get('user') ?? 0;
-  //   print(stateLogin);
-  //   if (stateLogin != 0) {
-  //     print("Alrady login");
-  //     var under18s =
-  //         items.singleWhere((i) => i.id == stateLogin, orElse: () => null);
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => MainHome(under18s)));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

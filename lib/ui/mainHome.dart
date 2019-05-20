@@ -3,6 +3,7 @@ import 'package:final_project_test/ui/Home.dart';
 import 'package:final_project_test/ui/album.dart';
 import 'package:final_project_test/ui/json_data_ui.dart';
 import 'package:final_project_test/ui/profile.dart';
+import 'package:final_project_test/ui/setting.dart';
 import 'package:flutter/material.dart';
 
 class MainHome extends StatelessWidget {
@@ -22,18 +23,11 @@ class MainHome extends StatelessWidget {
         // ),
         body: TabBarView(
           children: <Widget>[
-            // Container(
-            //   child: new Center(
-            //     child: new Text(
-            //       "Home",
-            //       style: TextStyle(fontSize: 30.0, color: Colors.grey),
-            //     ),
-            //   ),
-            // ),
             Home(dataUser, items),
             Friend(),
             Profile(dataUser),
             Album(),
+            Setting(dataUser)
           ],
         ),
         bottomNavigationBar: new Material(
