@@ -1,6 +1,8 @@
 import 'package:final_project_test/model/modelUser.dart';
+import 'package:final_project_test/ui/login.dart';
 import 'package:final_project_test/ui/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   Todo alldata;
@@ -41,7 +43,12 @@ class HomeState extends State {
               ),
               RaisedButton(
                 child: Text("Sign out"),
-                onPressed: () {},
+                onPressed: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.remove('user');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginForm()));
+                },
               ),
             ],
           ),
