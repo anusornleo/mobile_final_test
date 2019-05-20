@@ -34,16 +34,20 @@ class FriendState extends State<Friend> {
         appBar: new AppBar(
           title: new Text('Contact List'),
         ),
-        body: new ListView.builder(
-            itemCount: data == null ? 0 : data.length,
-            itemBuilder: (BuildContext context, i) {
-              return new ListTile(
-                  title: new Text(data[i]["name"]["first"]),
-                  subtitle: new Text(data[i]["phone"]),
-                  leading: new CircleAvatar(
-                    backgroundImage:
-                        new NetworkImage(data[i]["picture"]["thumbnail"]),
-                  ));
-            }));
+        body: data == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : new ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (BuildContext context, i) {
+                  return new ListTile(
+                      title: new Text(data[i]["name"]["first"]),
+                      subtitle: new Text(data[i]["phone"]),
+                      leading: new CircleAvatar(
+                        backgroundImage:
+                            new NetworkImage(data[i]["picture"]["thumbnail"]),
+                      ));
+                }));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:final_project_test/ui/json_data_ui.dart';
 import 'package:final_project_test/ui/login.dart';
+import 'package:final_project_test/ui/wait.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginForm(),
+      home: Wait(),
     );
   }
 }

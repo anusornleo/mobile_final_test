@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import '../model/modelUser.dart';
 
 class SignInForm extends StatefulWidget {
+  List<Todo> items = new List();
+  SignInForm(this.items);
   @override
   State<StatefulWidget> createState() {
-    return SignInFormState();
+    return SignInFormState(items);
   }
 }
 
 class SignInFormState extends State<SignInForm> {
+  List<Todo> items = new List();
+  SignInFormState(this.items);
   TodoDatabase db = TodoDatabase();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
@@ -17,11 +21,6 @@ class SignInFormState extends State<SignInForm> {
   final _formKey2 = GlobalKey<ScaffoldState>();
 
   List<Todo> listTodo;
-
-  // @override
-  // void getTodoLists() async {
-  //   await db.open("todo.db");
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,13 +90,6 @@ class SignInFormState extends State<SignInForm> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
-                        // if (_email.text == 'admin') {
-                        //   print("admin");
-                        //   Scaffold.of(context).showSnackBar(SnackBar(
-                        //     content: Text('user นี้มีอยู่ในระบบแล้ว'),
-                        //     duration: Duration(seconds: 3),
-                        //   ));
-                        // } else
                         if (_email.text.isEmpty ||
                             _password.text.isEmpty ||
                             _cpassword.text.isEmpty) {
@@ -110,10 +102,22 @@ class SignInFormState extends State<SignInForm> {
                               .saveNewTask(
                                   Todo.getValue(_email.text, _password.text))
                               .then((_) {
+                            items.clear();
+                            db.getAllTask().then((todos) {
+                              // restart read data when it changed
+                              setState(() {
+                                print(todos.length);
+                                todos.forEach((note) {
+                                  items.add(Todo.fromMap(note));
+                                  print(items.length);
+                                  // print(items[0].toMap());
+                                });
+                              });
+                            });
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginForm()));
+                                    builder: (context) => LoginForm(items)));
                           });
                         }
                       }),

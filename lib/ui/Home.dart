@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
+  List<Todo> items = new List();
   Todo alldata;
-  Home(this.alldata);
+  Home(this.alldata, this.items);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return HomeState(alldata);
+    return HomeState(alldata, items);
   }
 }
 
 class HomeState extends State {
+  List<Todo> items = new List();
   Todo alldata;
-  HomeState(this.alldata);
+  HomeState(this.alldata, this.items);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -46,8 +47,10 @@ class HomeState extends State {
                 onPressed: () async {
                   final prefs = await SharedPreferences.getInstance();
                   prefs.remove('user');
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginForm()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoginForm(items)));
                 },
               ),
             ],

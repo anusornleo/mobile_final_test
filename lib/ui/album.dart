@@ -29,24 +29,29 @@ class AlbumState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Album")),
-      body: ListView.builder(
-        itemCount: data == null ? 0 : data.length,
-        itemBuilder: (BuildContext context, i) {
-          return new Card(
-              child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 180,
-                child: Stack(
+      body: data == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, i) {
+                return new Card(
+                    child: Column(
                   children: <Widget>[
-                    Positioned.fill(child: Image.network(data[i]["url"]))
+                    SizedBox(
+                      height: 180,
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned.fill(
+                              child: Image.network(data[i]["thumbnailUrl"]))
+                        ],
+                      ),
+                    )
                   ],
-                ),
-              )
-            ],
-          ));
-        },
-      ),
+                ));
+              },
+            ),
     );
   }
 }

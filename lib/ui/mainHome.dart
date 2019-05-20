@@ -6,8 +6,9 @@ import 'package:final_project_test/ui/profile.dart';
 import 'package:flutter/material.dart';
 
 class MainHome extends StatelessWidget {
-  Todo alldata;
-  MainHome(this.alldata);
+  List<Todo> items = new List();
+  Todo dataUser;
+  MainHome(this.dataUser, this.items);
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -29,9 +30,9 @@ class MainHome extends StatelessWidget {
             //     ),
             //   ),
             // ),
-            Home(alldata),
+            Home(dataUser, items),
             Friend(),
-            Profile(alldata),
+            Profile(dataUser),
             Album(),
           ],
         ),

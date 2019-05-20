@@ -5,54 +5,52 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
+  List<Todo> items = new List();
+  LoginForm(this.items);
   @override
   State<StatefulWidget> createState() {
-    return LoginFormState();
+    return LoginFormState(items);
   }
 }
 
 class LoginFormState extends State<LoginForm> {
+  List<Todo> items = new List();
+  LoginFormState(this.items);
   final TextEditingController _user = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
   final _formKey = GlobalKey<ScaffoldState>();
-  List<Todo> items = new List();
   final prefs = SharedPreferences.getInstance();
 
   TodoDatabase db = TodoDatabase();
-  @override
-  Future initState() {
-    super.initState();
-    db.getAllTask().then((todos) {
-      // restart read data when it changed
-      setState(() {
-        todos.forEach((note) {
-          print(note);
-          items.add(Todo.fromMap(note));
-          // print(items[0].toMap());
-        });
-        getLogin();
-      });
-    });
-  }
+  // @override
+  // Future initState() {
+  //   super.initState();
+  //   items.length == 0 ? print("load") : print("complte");
+  //   db.getAllTask().then((todos) {
+  //     // restart read data when it changed
+  //     setState(() {
+  //       print(todos.length);
+  //       todos.forEach((note) {
+  //         items.add(Todo.fromMap(note));
+  //         print(items.length);
+  //       });
+  //       // getLogin();
+  //     });
+  //   });
+  // }
 
-  Future<String> getLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final stateLogin = prefs.get('user') ?? 0;
-    print(stateLogin);
-    if (stateLogin != 0) {
-      print("Alrady login");
-      var under18s =
-          items.singleWhere((i) => i.id == stateLogin, orElse: () => null);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MainHome(under18s)));
-      // for (var i in items) {
-      //   if (stateLogin == i.id) {
-      //     Navigator.pushReplacement(
-      //         context, MaterialPageRoute(builder: (context) => MainHome(i)));
-      //   }
-      // }
-    }
-  }
+  // Future<String> getLogin() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final stateLogin = prefs.get('user') ?? 0;
+  //   print(stateLogin);
+  //   if (stateLogin != 0) {
+  //     print("Alrady login");
+  //     var under18s =
+  //         items.singleWhere((i) => i.id == stateLogin, orElse: () => null);
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => MainHome(under18s)));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +104,7 @@ class LoginFormState extends State<LoginForm> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainHome(i)));
+                                  builder: (context) => MainHome(i, items)));
                         }
                       }
                       Scaffold.of(context).showSnackBar(SnackBar(
@@ -126,8 +124,10 @@ class LoginFormState extends State<LoginForm> {
                     style: TextStyle(fontSize: 12, color: Colors.blue),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignInForm()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignInForm(items)));
                   },
                 ),
               ),
