@@ -6,7 +6,7 @@ final String tableTodo = 'todo';
 final String columnId = 'id';
 final String columnUsername = 'username';
 final String columnPassword = 'password';
-final String columnCheck = 'check';
+final String columnCheckOk = 'checkOk';
 final String columnYear = 'year';
 final String columnGender = 'gender';
 final String columnDate = 'date';
@@ -15,7 +15,7 @@ class Todo {
   int _id;
   String _username;
   String _password;
-  String _check;
+  String _checkOk;
   String _year;
   String _gender;
   String _date;
@@ -24,7 +24,7 @@ class Todo {
     this._id = map['id'];
     this._username = map['username'];
     this._password = map['password'];
-    this._check = map['check'];
+    this._checkOk = map['checkOk'];
     this._year = map['year'];
     this._gender = map['gender'];
     this._date = map['date'];
@@ -35,7 +35,7 @@ class Todo {
     Map<String, dynamic> map = {
       columnUsername: _username,
       columnPassword: _password,
-      columnCheck: _check,
+      columnCheckOk: _checkOk,
       columnYear: _year,
       columnGender: _gender,
       columnDate: _date
@@ -46,11 +46,11 @@ class Todo {
     return map;
   }
 
-  Todo.getValue(username, password, check, year, gender, date) {
+  Todo.getValue(username, password, checkOk, year, gender, date) {
     // Get value from addItemScreen
     this._username = username;
     this._password = password;
-    this._check = check;
+    this._checkOk = checkOk;
     this._year = year;
     this._gender = gender;
     this._date = date;
@@ -61,7 +61,7 @@ class Todo {
     this._id = obj['id'];
     this._username = obj['username'];
     this._password = obj['password'];
-    this._check = obj['check'];
+    this._checkOk = obj['checkOk'];
     this._year = obj['year'];
     this._gender = obj['gender'];
     this._date = obj['date'];
@@ -71,7 +71,7 @@ class Todo {
   int get id => _id;
   String get username => _username;
   String get password => _password;
-  String get check => _check;
+  String get checkOk => _checkOk;
   String get year => _year;
   String get gender => _gender;
   String get date => _date;
@@ -102,7 +102,7 @@ class TodoDatabase {
 
   void _onCreate(Database db, int newVersion) async {
     await db.execute(
-        'CREATE TABLE $tableTodo($columnId INTEGER PRIMARY KEY, $columnUsername TEXT,$columnPassword TEXT,$columnCheck TEXT,$columnYear TEXT,$columnGender TEXT,$columnDate TEXT)');
+        'CREATE TABLE $tableTodo($columnId INTEGER PRIMARY KEY, $columnUsername TEXT,$columnPassword TEXT,$columnCheckOk TEXT,$columnYear TEXT,$columnGender TEXT,$columnDate TEXT)');
   }
 
   Future<int> saveNewTask(Todo todo) async {
@@ -120,7 +120,7 @@ class TodoDatabase {
           columnId,
           columnUsername,
           columnPassword,
-          columnCheck,
+          columnCheckOk,
           columnYear,
           columnGender,
           columnDate
@@ -150,6 +150,7 @@ class TodoDatabase {
   Future<int> updateNote(Todo todo) async {
     // update data of column done between 0 and 1 by id
     var dbClient = await db;
+    print("update");
     return await dbClient.update(tableTodo, todo.toMap(),
         where: "$columnId = ?", whereArgs: [todo.id]);
   }

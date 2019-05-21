@@ -1,4 +1,5 @@
 import 'package:final_project_test/model/modelUser.dart';
+import 'package:final_project_test/ui/wait.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ class Setting extends StatefulWidget {
 }
 
 class SettingState extends State {
+  TodoDatabase db = TodoDatabase();
   final Todo userdata;
   SettingState(this.userdata);
 
@@ -32,16 +34,17 @@ class SettingState extends State {
     });
   }
 
+  TextEditingController _username = new TextEditingController();
+  TextEditingController _password = new TextEditingController();
+  TextEditingController _dob = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _username = new TextEditingController();
-    TextEditingController _password = new TextEditingController();
-    TextEditingController _dob = new TextEditingController();
-    @override
-    void dispose() {
-      _username.dispose();
-      super.dispose();
-    }
+    // @override
+    // void dispose() {
+    //   _username.dispose();
+    //   super.dispose();
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +62,7 @@ class SettingState extends State {
 
                   // initialValue: userdata.id.toString(),
                   decoration: InputDecoration(
-                    labelText: userdata.username.toString(),
+                    labelText: "old : " + userdata.username.toString(),
                     hintText: "Plaease input you email",
                     prefixIcon: Icon(Icons.person),
                   ),
@@ -67,7 +70,7 @@ class SettingState extends State {
                 TextFormField(
                   controller: _password,
                   decoration: InputDecoration(
-                    labelText: userdata.password.toString(),
+                    labelText: "old : " + userdata.password.toString(),
                     hintText: "Plaease input you email",
                     prefixIcon: Icon(Icons.vpn_key),
                   ),
@@ -136,7 +139,7 @@ class SettingState extends State {
                   controller: _dob,
                   inputType: InputType.date,
                   format: DateFormat("EEEE dd MMMM yyyy"),
-                  decoration: InputDecoration(labelText: 'Date'),
+                  decoration: InputDecoration(labelText: 'Old Date : '),
                 ),
                 Builder(
                   builder: (context) => RaisedButton(
@@ -148,6 +151,18 @@ class SettingState extends State {
                         print(_year);
                         print(_gen);
                         print(_dob.text);
+                        db.updateNote(Todo.fromMap({
+                          'id': userdata.id, // old id
+                          'username': _username.text, // old title
+                          'password': _password.text,
+                          'checkOk':
+                              isChecked.toString(), // change data as TRUE
+                          'year': _year,
+                          'gender': _gen,
+                          'date': _dob.text,
+                        }));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => Wait()));
                       }),
                 ),
               ],

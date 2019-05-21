@@ -27,7 +27,7 @@ class ProfileState extends State {
           children: <Widget>[
             Text(dataUser.id.toString()),
             Text(dataUser.username),
-            Text("data")
+            Text(dataUser.date)
           ],
         ),
       ),

@@ -28,6 +28,7 @@ class SignInFormState extends State<SignInForm> {
   String _gen = "";
   List<String> years = ['1', '2', '3', '4'];
   String _year = '1';
+  bool isChecked = false;
 
   void _handleRadioValueChange1(String value) {
     setState(() {
@@ -38,7 +39,6 @@ class SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    bool isChecked = false;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -186,7 +186,7 @@ class SignInFormState extends State<SignInForm> {
                                   isChecked.toString(),
                                   _year,
                                   _gen,
-                                  _dob.toString()))
+                                  _dob.text))
                               .then((_) {
                             items.clear();
                             db.getAllTask().then((todos) {
